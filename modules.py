@@ -126,28 +126,31 @@ class Up(nn.Module):
 
 
 class UNet(nn.Module):
-    def __init__(self, c_in=3, c_out=3, time_dim=256, device="cuda"):
+    def __init__(self, c_in=1, c_out=1, time_dim=256, device="cuda"):
         super().__init__()
         self.device = device
         self.time_dim = time_dim
         self.inc = DoubleConv(c_in, 64)
         self.down1 = Down(64, 128)
-        self.sa1 = SelfAttention(128, 32)
-        self.down2 = Down(128, 256)
-        self.sa2 = SelfAttention(256, 16)
-        self.down3 = Down(256, 256)
-        self.sa3 = SelfAttention(256, 8)
+        self.sa1 = SelfAttention(128, 14)
+        self.down2 = Down(128, 128)
+        self.sa2 = SelfAttention(128, 7)
+        # self.down3 = Down(256, 256)
+        # self.sa3 = SelfAttention(256, 8)
 
-        self.bot1 = DoubleConv(256, 512)
-        self.bot2 = DoubleConv(512, 512)
-        self.bot3 = DoubleConv(512, 256)
+        self.bot1 = DoubleConv(128, 256)
+        self.bot2 = DoubleConv(256, 256)
+        self.bot3 = DoubleConv(256, 128)
+        # self.bot1 = DoubleConv(256, 512)
+        # self.bot2 = DoubleConv(512, 512)
+        # self.bot3 = DoubleConv(512, 256)
 
-        self.up1 = Up(512, 128)
-        self.sa4 = SelfAttention(128, 16)
+        # self.up1 = Up(512, 128)
+        # self.sa4 = SelfAttention(128, 16)
         self.up2 = Up(256, 64)
-        self.sa5 = SelfAttention(64, 32)
+        self.sa5 = SelfAttention(64, 14)
         self.up3 = Up(128, 64)
-        self.sa6 = SelfAttention(64, 64)
+        self.sa6 = SelfAttention(64, 28)
         self.outc = nn.Conv2d(64, c_out, kernel_size=1)
 
     def pos_encoding(self, t, channels):
@@ -169,16 +172,16 @@ class UNet(nn.Module):
         x2 = self.sa1(x2)
         x3 = self.down2(x2, t)
         x3 = self.sa2(x3)
-        x4 = self.down3(x3, t)
-        x4 = self.sa3(x4)
+        # x4 = self.down3(x3, t)
+        # x4 = self.sa3(x4)
 
-        x4 = self.bot1(x4)
-        x4 = self.bot2(x4)
-        x4 = self.bot3(x4)
+        x3 = self.bot1(x3)
+        x3 = self.bot2(x3)
+        x3 = self.bot3(x3)
 
-        x = self.up1(x4, x3, t)
-        x = self.sa4(x)
-        x = self.up2(x, x2, t)
+        # x = self.up1(x4, x3, t)
+        # x = self.sa4(x)
+        x = self.up2(x3, x2, t)
         x = self.sa5(x)
         x = self.up3(x, x1, t)
         x = self.sa6(x)
