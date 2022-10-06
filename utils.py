@@ -25,6 +25,7 @@ def get_data(args):
     transforms = torchvision.transforms.Compose([
     #     torchvision.transforms.Resize(80),  # args.image_size + 1/4 *args.image_size
     #     torchvision.transforms.RandomResizedCrop(args.image_size, scale=(0.8, 1.0)),
+        torchvision.transforms.CenterCrop(24),
         torchvision.transforms.ToTensor(),
         torchvision.transforms.Normalize((0.5,), (0.5,)),
     ])
@@ -34,7 +35,9 @@ def get_data(args):
     # use mnist
     import torchvision.datasets as datasets
     dataset = datasets.MNIST(root='./data', train=True, download=True, transform=transforms)
-
+    # limit dataset size
+    import torch.utils.data as data_utils
+    dataset = data_utils.Subset(dataset, torch.arange(1000))
 
     dataloader = DataLoader(dataset, batch_size=args.batch_size, shuffle=True)
     return dataloader
