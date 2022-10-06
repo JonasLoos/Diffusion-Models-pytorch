@@ -65,7 +65,7 @@ def train(args):
     model = UNet(device=device, image_size=args.image_size).to(device)
     optimizer = optim.AdamW(model.parameters(), lr=args.lr)
     mse = nn.MSELoss()
-    diffusion = Diffusion(img_size=args.image_size, device=device)
+    diffusion = Diffusion(img_size=args.image_size, noise_steps=args.noise_steps, device=device)
     logger = SummaryWriter(os.path.join("runs", args.run_name))
     l = len(dataloader)
 
@@ -96,12 +96,13 @@ def launch():
     parser = argparse.ArgumentParser()
     args = parser.parse_args()
     args.run_name = "DDPM_Uncondtional"
-    args.epochs = 500
-    args.batch_size = 12
-    args.image_size = 64
-    args.dataset_path = r""
-    args.device = "cuda"
+    args.epochs = 50
+    args.batch_size = 10
+    args.image_size = 24
+    args.dataset_size = 1000
+    args.device = "cpu"
     args.lr = 3e-4
+    args.noise_steps = 500
     train(args)
 
 
