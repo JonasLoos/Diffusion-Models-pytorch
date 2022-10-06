@@ -2,6 +2,18 @@
 
 This is an adjusted version of the diffusion models implementation for use with MNSIT handwritten digit data. The goal here is to train a model to learn how to draw handwritten digits. `test.ipynb` can be used to adjust and train the model and can be run e.g. on [Google Colab by clicking here](https://colab.research.google.com/github/jonasloos/Diffusion-Models-pytorch/blob/main/test.ipynb). Just uncomment the cells relevant for Colab.
 
+### Examples
+
+Epoch | Example Images
+-|-
+0 | ![0](https://user-images.githubusercontent.com/33965649/194434345-c76d4411-5bfe-41e3-9eb7-4be04f93f6af.jpg)
+20 | ![20](https://user-images.githubusercontent.com/33965649/194434377-4a914083-3346-46c3-9761-9d00dc8918de.jpg)
+50 | ![50](https://user-images.githubusercontent.com/33965649/194434565-b59a5ff8-5da2-43e9-936e-3570a5213821.jpg)
+100 | ![100](https://user-images.githubusercontent.com/33965649/194434580-b9a8977c-4935-49fe-ab4b-cf12b974696c.jpg)
+150 | ![150](https://user-images.githubusercontent.com/33965649/194434678-95617034-e63d-4162-87f1-21da3e7d60d5.jpg)
+200 | ![200](https://user-images.githubusercontent.com/33965649/194434595-ff57edc2-af38-4fef-b28a-48aecbb914dc.jpg)
+250 | ![250](https://user-images.githubusercontent.com/33965649/194434654-3e29c6e1-c351-4cfb-889a-fc5cce48513e.jpg)
+
 
 # Original Readme
 
