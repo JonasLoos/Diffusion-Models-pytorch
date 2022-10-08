@@ -33,7 +33,7 @@ def get_data(args):
     dataset = datasets.MNIST(root='./data', train=True, download=True, transform=transforms)
     # limit dataset size
     import torch.utils.data as data_utils
-    dataset = data_utils.Subset(dataset, torch.arange(1000))
+    dataset = data_utils.Subset(dataset, torch.arange(args.dataset_size))
 
     dataloader = DataLoader(dataset, batch_size=args.batch_size, shuffle=True)
     return dataloader
